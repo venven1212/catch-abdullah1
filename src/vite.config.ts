@@ -3,21 +3,21 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
-  // Since your files are in a "pile", the base is just the root
+  // Base "./" ensures the site works even if it's not at the domain root
   base: "./", 
   plugins: [react()],
   resolve: {
     alias: {
-      // This was pointing to "src", now it points to "right here"
-      "@": path.resolve(__dirname, "."),
-      // Since your images/models are also in the pile, point assets here too
-      "@assets": path.resolve(__dirname, "."), 
+      // Points "@" specifically to your new src folder
+      "@": path.resolve(__dirname, "src"),
+      // Points "@assets" specifically to your new public folder
+      "@assets": path.resolve(__dirname, "public"), 
     },
   },
   build: {
     outDir: "dist",
     emptyOutDir: true,
-    // This helps Vite handle the "pile" better
+    // We can simplify rollupOptions now that index.html is in the root
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, "index.html"),
